@@ -237,8 +237,7 @@ export const RichTextEditorFooter = React.forwardRef<
   return <HStack ref={ref} gap="1" borderTopWidth="1px" p="3" {...props} />
 })
 
-export interface RichTextEditorContentProps
-  extends Omit<React.ComponentProps<typeof EditorContent>, "editor"> { }
+export type RichTextEditorContentProps = Omit<React.ComponentProps<typeof EditorContent>, "editor">
 
 export const RichTextEditorContent = React.forwardRef<
   HTMLDivElement,
@@ -249,7 +248,7 @@ export const RichTextEditorContent = React.forwardRef<
   return <EditorContent editor={editor} {...props} innerRef={ref} />
 })
 
-export interface RichTextEditorControlGroupProps extends StackProps { }
+export type RichTextEditorControlGroupProps = StackProps
 
 export const RichTextEditorControlGroup = React.forwardRef<
   HTMLDivElement,
@@ -265,13 +264,5 @@ export const RichTextEditor = {
   ControlGroup: RichTextEditorControlGroup,
   Footer: RichTextEditorFooter,
 } as const
-
-export * as Control from "./rich-text-editor-control"
-
-export {
-  createBooleanControl,
-  createSelectControl,
-  createSwatchControl,
-} from "./rich-text-editor-control"
 
 export { useRichTextEditorContext } from "./rich-text-editor-context"
