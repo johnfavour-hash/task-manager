@@ -11,8 +11,10 @@ import {
     VStack,
     Link as ChakraLink,
     Image,
-    HStack
+    HStack,
+    IconButton,
 } from "@chakra-ui/react";
+import * as React from "react";
 import { motion } from "framer-motion";
 import { Link as RouterLink } from "react-router";
 import {
@@ -26,69 +28,124 @@ import {
     LuFacebook,
     LuTwitter,
     LuInstagram,
-    LuLinkedin
+    LuLinkedin,
+    LuMenu,
+    LuX
 } from "react-icons/lu";
 
 const MotionBox = motion.create(Box);
 
-const Nav = () => (
-    <Box
-        as="nav"
-        position="fixed"
-        top="0"
-        w="full"
-        zIndex="100"
-        bg="rgba(255, 255, 255, 0.8)"
-        backdropFilter="blur(10px)"
-        borderBottom="1px solid"
-        borderColor="#E2E8F0"
-    >
-        <Container maxW="container.xl" py={4}>
-            <Flex align="center" justify="space-between">
-                <HStack gap={2}>
-                    <Box
-                        bg="#3B82F6"
-                        w="40px"
-                        h="40px"
-                        borderRadius="xl"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <LuZap color="white" size={24} />
-                    </Box>
-                    <Text fontSize="2xl" fontWeight="800" color="#1A202C" letterSpacing="tight">
-                        Taskmaster
-                    </Text>
-                </HStack>
+const Nav = () => {
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-                <HStack gap={8} display={{ base: "none", md: "flex" }}>
-                    <ChakraLink asChild color="#718096" _hover={{ color: "#3B82F6" }} fontWeight="500">
-                        <RouterLink to="/">Home</RouterLink>
-                    </ChakraLink>
-                    <ChakraLink asChild color="#718096" _hover={{ color: "#3B82F6" }} fontWeight="500">
-                        <RouterLink to="#">Features</RouterLink>
-                    </ChakraLink>
-                    <ChakraLink asChild color="#718096" _hover={{ color: "#3B82F6" }} fontWeight="500">
-                        <RouterLink to="#">Solutions</RouterLink>
-                    </ChakraLink>
-                    <ChakraLink asChild color="#718096" _hover={{ color: "#3B82F6" }} fontWeight="500">
-                        <RouterLink to="#">Pricing</RouterLink>
-                    </ChakraLink>
-                </HStack>
+    const navLinks = [
+        { name: "Home", path: "/" },
+        { name: "Features", path: "#" },
+        { name: "Solutions", path: "#" },
+        { name: "Pricing", path: "#" },
+    ];
 
-                <HStack gap={4}>
-                    <Button asChild variant="ghost" color="#1A202C" _hover={{ bg: "#F8F9FB" }}>
-                        <RouterLink to="/auth/login">Login</RouterLink>
-                    </Button>
-                    <Button asChild bg="#3B82F6" color="white" _hover={{ bg: "#2563EB" }} borderRadius="full" px={6}>
-                        <RouterLink to="/auth/signup">Get Started</RouterLink>
-                    </Button>
-                </HStack>
-            </Flex>
-        </Container>
-    </Box>
-);
+    return (
+        <Box
+            as="nav"
+            position="fixed"
+            top="0"
+            w="full"
+            zIndex="200"
+            bg="rgba(255, 255, 255, 0.8)"
+            backdropFilter="blur(10px)"
+            borderBottom="1px solid"
+            borderColor="#E2E8F0"
+        >
+            <Container maxW="container.xl" py={4}>
+                <Flex align="center" justify="space-between">
+                    <HStack gap={2}>
+                        <Box
+                            bg="#3B82F6"
+                            w="40px"
+                            h="40px"
+                            borderRadius="xl"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <LuZap color="white" size={24} />
+                        </Box>
+                        <Text fontSize="2xl" fontWeight="800" color="#1A202C" letterSpacing="tight">
+                            Taskmaster
+                        </Text>
+                    </HStack>
+
+                    <HStack gap={8} display={{ base: "none", md: "flex" }}>
+                        {navLinks.map((link) => (
+                            <ChakraLink key={link.name} asChild color="#718096" _hover={{ color: "#3B82F6" }} fontWeight="500">
+                                <RouterLink to={link.path}>{link.name}</RouterLink>
+                            </ChakraLink>
+                        ))}
+                    </HStack>
+
+                    <HStack gap={4}>
+                        <HStack gap={4} display={{ base: "none", sm: "flex" }}>
+                            <Button asChild variant="ghost" color="#1A202C" _hover={{ bg: "#F8F9FB" }}>
+                                <RouterLink to="/auth/login">Login</RouterLink>
+                            </Button>
+                            <Button asChild bg="#3B82F6" color="white" _hover={{ bg: "#2563EB" }} borderRadius="full" px={6}>
+                                <RouterLink to="/auth/signup">Get Started</RouterLink>
+                            </Button>
+                        </HStack>
+
+                        <IconButton
+                            display={{ base: "flex", md: "none" }}
+                            aria-label="Open menu"
+                            variant="ghost"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        >
+                            {isMenuOpen ? <LuX size={24} /> : <LuMenu size={24} />}
+                        </IconButton>
+                    </HStack>
+                </Flex>
+            </Container>
+
+            {/* Mobile Menu */}
+            <motion.div
+                initial={false}
+                animate={isMenuOpen ? "open" : "closed"}
+                variants={{
+                    open: { opacity: 1, height: "auto", display: "block" },
+                    closed: { opacity: 0, height: 0, transitionEnd: { display: "none" } }
+                }}
+            >
+                <Box bg="white" borderTop="1px solid" borderColor="#E2E8F0" p={4} display={{ md: "none" }}>
+                    <VStack gap={4} align="stretch">
+                        {navLinks.map((link) => (
+                            <ChakraLink
+                                key={link.name}
+                                asChild
+                                py={2}
+                                color="#718096"
+                                _hover={{ color: "#3B82F6", bg: "#F8F9FB" }}
+                                fontWeight="500"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <RouterLink to={link.path}>{link.name}</RouterLink>
+                            </ChakraLink>
+                        ))}
+                        <Box pt={4} borderTop="1px solid" borderColor="#F1F5F9">
+                            <Stack gap={3}>
+                                <Button asChild variant="outline" w="full" borderRadius="full">
+                                    <RouterLink to="/auth/login">Login</RouterLink>
+                                </Button>
+                                <Button asChild bg="#3B82F6" color="white" w="full" borderRadius="full">
+                                    <RouterLink to="/auth/signup">Get Started Free</RouterLink>
+                                </Button>
+                            </Stack>
+                        </Box>
+                    </VStack>
+                </Box>
+            </motion.div>
+        </Box>
+    );
+};
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ElementType, title: string, description: string }) => (
     <VStack
@@ -153,14 +210,14 @@ const LandingPage = () => {
                             <Text fontSize={{ base: "lg", md: "xl" }} color="#718096" maxW="2xl">
                                 Taskmaster provides robust solutions for modern teams to track notes, tasks, and progress with a beautiful, lightning-fast interface.
                             </Text>
-                            <HStack gap={4}>
-                                <Button asChild size="lg" bg="#3B82F6" color="white" _hover={{ bg: "#2563EB" }} borderRadius="full" px={8} h="60px" fontSize="md">
+                            <Stack direction={{ base: "column", sm: "row" }} gap={4} w={{ base: "full", sm: "auto" }}>
+                                <Button asChild size="lg" bg="#3B82F6" color="white" _hover={{ bg: "#2563EB" }} borderRadius="full" px={8} h={{ base: "50px", md: "60px" }} fontSize="md" w={{ base: "full", sm: "auto" }}>
                                     <RouterLink to="/auth/signup">Get Started Now <Box as="span" ml={2}><LuArrowRight /></Box></RouterLink>
                                 </Button>
-                                <Button size="lg" variant="outline" borderColor="#E2E8F0" color="#1A202C" _hover={{ bg: "white" }} borderRadius="full" px={8} h="60px" fontSize="md">
+                                <Button size="lg" variant="outline" borderColor="#E2E8F0" color="#1A202C" _hover={{ bg: "white" }} borderRadius="full" px={8} h={{ base: "50px", md: "60px" }} fontSize="md" w={{ base: "full", sm: "auto" }}>
                                     Learn More
                                 </Button>
-                            </HStack>
+                            </Stack>
                         </VStack>
 
                         <Flex flex={1} justify="center">
@@ -182,7 +239,7 @@ const LandingPage = () => {
                                         <Image
                                             src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
                                             alt="Dashboard Preview"
-                                            maxW="500px"
+                                            maxW={{ base: "100%", md: "500px" }}
                                         />
                                     </Box>
                                 </Box>
@@ -266,11 +323,11 @@ const LandingPage = () => {
                 <Container maxW="container.xl">
                     <Flex direction={{ base: "column", md: "row" }} justify="space-between" align="center" gap={12}>
                         <VStack gap={2} align={{ base: "center", md: "flex-start" }}>
-                            <Box display="flex" alignItems="center" bg="white" color="#1A202C" px={6} py={8} borderRadius="full" mb={4}>
-                                <Text fontSize="6xl" fontWeight="800">10</Text>
+                            <Box display="flex" alignItems="center" bg="white" color="#1A202C" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }} borderRadius="full" mb={4}>
+                                <Text fontSize={{ base: "4xl", md: "6xl" }} fontWeight="800">10</Text>
                                 <VStack align="flex-start" ml={4} gap={0}>
-                                    <Text fontWeight="bold">Years of</Text>
-                                    <Text fontWeight="bold">Experience</Text>
+                                    <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }}>Years of</Text>
+                                    <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }}>Experience</Text>
                                 </VStack>
                             </Box>
                         </VStack>

@@ -41,7 +41,7 @@ export const EditTodoModal = ({ isOpen, onClose, todo }: EditTodoModalProps) => 
     });
 
     return (
-        <Dialog.Root open={isOpen} onOpenChange={(e: { open: boolean }) => !e.open && onClose()} size="lg">
+        <Dialog.Root open={isOpen} onOpenChange={(e: { open: boolean }) => !e.open && onClose()} size={{ base: "xs", sm: "md", md: "lg" }}>
             <Portal>
                 <Dialog.Backdrop backdropFilter="blur(10px)" bg="rgba(0, 0, 0, 0.6)" />
                 <Dialog.Positioner>

@@ -52,7 +52,7 @@ export const AddTodoModal = ({ isOpen, onClose }: AddTodoModalProps) => {
     };
 
     return (
-        <Dialog.Root open={isOpen} onOpenChange={(e: { open: boolean }) => !e.open && handleClose()} size="lg">
+        <Dialog.Root open={isOpen} onOpenChange={(e: { open: boolean }) => !e.open && handleClose()} size={{ base: "xs", sm: "md", md: "lg" }}>
             <Portal>
                 <Dialog.Backdrop backdropFilter="blur(10px)" bg="rgba(0, 0, 0, 0.6)" />
                 <Dialog.Positioner>

@@ -265,4 +265,4 @@ export const RichTextEditor = {
   Footer: RichTextEditorFooter,
 } as const
 
-export { useRichTextEditorContext } from "./rich-text-editor-context"
+

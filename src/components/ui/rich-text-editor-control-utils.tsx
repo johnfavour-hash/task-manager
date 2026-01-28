@@ -17,33 +17,17 @@ import { Editor } from "@tiptap/react"
 import * as React from "react"
 import { useRichTextEditorContext } from "./rich-text-editor-context"
 import { Tooltip } from "./tooltip"
+import { ButtonControl } from "./rich-text-editor-button-control"
 
 export interface BaseControlConfig {
     label: string
     icon?: React.ElementType
     isDisabled?: (editor: Editor) => boolean
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getProps?: (editor: Editor) => Record<string, any>
 }
 
-export interface ButtonControlProps
-    extends Omit<IconButtonProps, "aria-label"> {
-    icon: React.ReactNode
-    label: string
-}
 
-export const ButtonControl = React.forwardRef<
-    HTMLButtonElement,
-    ButtonControlProps
->(function ButtonControl(props, ref) {
-    const { icon, label, ...rest } = props
-    return (
-        <Tooltip content={label}>
-            <IconButton ref={ref} size="2xs" aria-label={label} {...rest}>
-                {icon}
-            </IconButton>
-        </Tooltip>
-    )
-})
 
 export interface BooleanControlConfig extends BaseControlConfig {
     icon: React.ElementType

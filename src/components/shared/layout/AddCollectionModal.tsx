@@ -46,7 +46,7 @@ export const AddCollectionModal = ({ isOpen, onClose }: AddCollectionModalProps)
     };
 
     return (
-        <Dialog.Root open={isOpen} onOpenChange={(e) => !e.open && onClose()} size="md">
+        <Dialog.Root open={isOpen} onOpenChange={(e) => !e.open && onClose()} size={{ base: "xs", sm: "sm", md: "md" }}>
             <Portal>
                 <Dialog.Backdrop backdropFilter="blur(10px)" bg="rgba(0, 0, 0, 0.4)" />
                 <Dialog.Positioner>
