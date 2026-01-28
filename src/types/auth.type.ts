@@ -1,9 +1,11 @@
-
-export interface AuthState {
+export interface AuthData {
     token: string;
     refreshToken: string;
     expireAt: string;
-    setAuth: (auth: AuthState) => void;
+}
+
+export interface AuthState extends AuthData {
+    setAuth: (auth: AuthData) => void;
     clearAuth: () => void;
 }
 

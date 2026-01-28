@@ -467,8 +467,7 @@ export const Link = createBooleanControl({
   command: (editor) => {
     const url = window.prompt("Enter URL")
     if (url)
-      editor
-        .chain()
+      ; (editor.chain() as any)
         .focus()
         .extendMarkRange("link")
         .setLink({ href: url })
@@ -520,7 +519,7 @@ export const Undo = createBooleanControl({
   label: "Undo",
   icon: LuRotateCcw,
   command: (editor) => (editor.chain() as any).focus().undo().run(),
-  isDisabled: (editor) => !editor.can().undo(),
+  isDisabled: (editor) => !(editor.can() as any).undo(),
   getVariant: (editor) => (editor.isActive("link") ? "subtle" : "ghost"),
 })
 
@@ -528,7 +527,7 @@ export const Redo = createBooleanControl({
   label: "Redo",
   icon: LuRotateCw,
   command: (editor) => (editor.chain() as any).focus().redo().run(),
-  isDisabled: (editor) => !editor.can().redo(),
+  isDisabled: (editor) => !(editor.can() as any).redo(),
   getVariant: (editor) => (editor.isActive("link") ? "subtle" : "ghost"),
 })
 

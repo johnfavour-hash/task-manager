@@ -221,7 +221,7 @@ const LandingPage = () => {
                             />
                         </SimpleGrid>
 
-                        <Button variant="link" color="#3B82F6" fontSize="md" rightIcon={<LuArrowRight />}>
+                        <Button variant="plain" color="#3B82F6" fontSize="md" rightIcon={<LuArrowRight />}>
                             See All Services
                         </Button>
                     </VStack>
